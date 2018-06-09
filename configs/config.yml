@@ -1,0 +1,7 @@
+address:
+  - location:
+    origin: "localhost:8181/metricas"
+    destination: "localhost:8080/api/metricas"
+  - location:
+    origin: "localhost:8181/intervalo"
+    destination: "localhost:8080/api/intervalo"
