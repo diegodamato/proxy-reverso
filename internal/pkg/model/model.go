@@ -1,10 +1,13 @@
 package model
 
 type Location struct {
-	Origin      string
-	Destination string
+	OriginPath      string
+	Destination     string
+	DestinationPath string
 }
 
-type Config struct {
+type Configuracao struct {
 	Address []Location
 }
+
+var Config = Configuracao{}
