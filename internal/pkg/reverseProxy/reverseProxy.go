@@ -1,13 +1,11 @@
 package reverseProxy
 
 import (
+	"log"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
 	"proxy-reverso/internal/pkg/model"
-
-	"github.com/codegangsta/negroni"
-	"github.com/gorilla/mux"
 )
 
 func hostReverseProxy(target url.URL) *httputil.ReverseProxy {
@@ -31,7 +29,6 @@ func mapAddress() map[string]model.Location {
 func ReverseProxy() {
 	var AddressMap = make(map[string]model.Location)
 	AddressMap = mapAddress()
-	router := mux.NewRouter()
 
 	for key := range AddressMap {
 		proxy := hostReverseProxy(
@@ -41,10 +38,10 @@ func ReverseProxy() {
 				Path:   AddressMap[key].DestinationPath,
 			})
 
-		router.HandleFunc(AddressMap[key].OriginPath, proxy.ServeHTTP)
+		http.HandleFunc(AddressMap[key].OriginPath, proxy.ServeHTTP)
 	}
 
-	app := negroni.New()
-	app.UseHandler(router)
-	app.Run(":8082")
+	log.Println("Server running on port 8082")
+	log.Fatal(http.ListenAndServeTLS(":8082", "./certificates/server.crt", "./certificates/server.key", nil))
+
 }

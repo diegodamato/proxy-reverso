@@ -6,4 +6,4 @@ address:
   - location:
     originpath: "/intervalo"
     destination: "localhost:8080"
-    destinationpath: "/v1/intervalo"
+    destinationpath: "/v1/intervalometricas/209"
